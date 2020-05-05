@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Etch-A-Sketch</title>
+<style>
+    div{
+    margin : 0;
+    padding : 0;
+    }
+    h1{
+        margin-top: 15px;
+        text-align : center;
+    }
+    #container{
+        height : 500px;
+        width : 700px;
+        margin: 20px auto;
+        background-color: white;
+    }
+    body{
+        background-color: aliceblue;
+    }
+</style>
+</head>
+<body>
+<h1>Etch-A-Sketch</h1>
+<button id="lm">Light Mode</button>
+<button id="dm">Dark Mode</button>
+<button id="cm">Crazy Mode</button>
+<button id="clear">Clear Grid</button>
+<div id="container"></div>
+<script>
+    var container = document.getElementById("container");
+    var bs = document.getElementsByClassName("box");
+    var gridno = 16;
+    var makeGrid = () => {
+        var boxno = gridno*gridno;
+        var bw = (no) =>{
+          var w=95/no+"%";
+           return w;
+        };
+        var bh = (no) =>{
+          var w=88/no+"%";
+           return w;
+        };
+        var htmlElements = "";
+        for (var i = 0; i <boxno; i++) {
+            htmlElements += '<div class="box" style="display : inline-block; margin: 0px 1px;"></div>';
+            console.log("added");
+        }
+        container.innerHTML = htmlElements;
+        
+    for ( var i = 0; i < bs.length; i++) {
+        bs[i].style.width = bw(gridno);
+        bs[i].style.height = bh(gridno);
+        bs[i].addEventListener("mouseover", (event) => {
+           event.target.style.backgroundColor = "blue";
+        });
+    }
+    };
+    makeGrid();
+    function random_rgba() {
+    var o = Math.round, r = Math.random, s = 255;
+    return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + r().toFixed(1) + ')';
+        }
+        var color = random_rgba();
+    
+    var clear = document.getElementById("clear");
+    var clr = () => {
+    for ( var i = 0; i < bs.length; i++) {
+                bs[i].style.backgroundColor = "white";
+            }
+        gridno = prompt("Enter the size of the new canvas.");
+        makeGrid();
+    };
+    clear.addEventListener("click", clr);
+        var lm = document.getElementById("lm");
+        lm.addEventListener("click", () => {
+        for ( var i = 0; i < bs.length; i++) {
+                
+                bs[i].style.backgroundColor = "white";
+                bs[i].addEventListener("mouseover", (event) => {
+                        event.target.style.backgroundColor = "black";
+                });
+            }   
+    });
+        var dm = document.getElementById("dm");
+        dm.addEventListener("click", () => {
+        for ( var i = 0; i < bs.length; i++) {
+                
+                bs[i].style.backgroundColor = "black";
+                bs[i].addEventListener("mouseover", (event) => {
+                        event.target.style.backgroundColor = "white";
+                });
+            }
+    });
+        var cm = document.getElementById("cm");
+        cm.addEventListener("click", () => {
+        for ( var i = 0; i < bs.length; i++) {
+               
+                bs[i].style.backgroundColor = color;
+                bs[i].addEventListener("mouseover", (event) => {
+                        event.target.style.backgroundColor = random_rgba();
+                });
+            }
+    });
+</script>
+</body>
+</html>
